@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTTP Debugger</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>HTTP Debugger</h1>
+        <div class="controls">
+            <input type="text" id="searchInput" placeholder="Search...">
+            <select id="methodFilter">
+                <option value="">All Methods</option>
+                <option value="GET">GET</option>
+                <option value="POST">POST</option>
+                <option value="PUT">PUT</option>
+                <option value="DELETE">DELETE</option>
+            </select>
+            <button onclick="refreshLogs()">Refresh</button>
+            <button onclick="clearLogs()">Clear</button>
+        </div>
+        <div id="logContainer" class="log-list"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
