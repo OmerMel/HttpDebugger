@@ -52,6 +52,8 @@ class MainActivity : AppCompatActivity() {
 
         val request = Request.Builder()
             .url("https://httpbin.org/get")
+            .addHeader("X-Debug-Client", "AndroidApp")
+            .addHeader("User-Agent", "HttpDebuggerTest/1.0")
             .build()
 
         client.newCall(request).enqueue(object : Callback {
