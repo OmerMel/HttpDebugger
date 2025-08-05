@@ -17,6 +17,11 @@ class HttpDebugInterceptor : Interceptor {
         val requestBody = request.body
         val requestBodyString = requestBody?.let { bodyToString(it) } ?: ""
 
+        request.headers.forEach {
+            Log.d("HttpDebug", "🟡 REQUEST HEADER => ${it.first}: ${it.second}")
+        }
+        Log.d("HttpDebug", "🟡 header count: ${request.headers.size}")
+
         val response = try {
             chain.proceed(request)
         } catch (e: Exception) {
@@ -41,9 +46,9 @@ class HttpDebugInterceptor : Interceptor {
             url = request.url.toString(),
             statusCode = response.code,
             durationMs = tookMs,
-            requestHeaders = request.headers.toString(),
+            requestHeaders = request.headers.joinToString("\n") { "${it.first}: ${it.second}" },
             requestBody = requestBodyString,
-            responseHeaders = response.headers.toString(),
+            responseHeaders = response.headers.toString().replace("\r\n", "\n"),
             responseBody = responseBodyString
         )
         Log.d("HttpDebugInterceptor", "✅ Logged to DebugHttpLogger (${response.code})")
