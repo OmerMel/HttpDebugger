@@ -60,6 +60,7 @@ function applyFilters() {
     const searchTerm = searchInput.value.toLowerCase();
     const methodFilterValue = methodFilter.value;
     const statusFilterValue = statusFilter.value;
+    const timeFilterValue = parseInt(timeFilter.value);
     const failedOnly = failedOnlyCheckbox.checked;
 
     filteredRequests = requests.filter(request => {
@@ -76,6 +77,16 @@ function applyFilters() {
         if (statusFilterValue) {
             const statusClass = Math.floor(request.statusCode / 100);
             if (statusClass.toString() !== statusFilterValue) {
+                return false;
+            }
+        }
+
+        if (timeFilterValue && request.timestamp) {
+            const now = Date.now();
+            const requestTime = new Date("1970-01-01T" + request.timestamp).getTime();
+            const cutoff = now - timeFilterValue * 60 * 1000;
+
+            if (Date.now() - request._rawTimestamp > timeFilterValue * 60 * 1000) {
                 return false;
             }
         }
@@ -105,6 +116,7 @@ function fetchAndDisplayLogs() {
 
                 return {
                     id: index,
+                    _rawTimestamp: entry.timestamp,
                     timestamp: new Date(entry.timestamp).toLocaleTimeString(),
                     method: entry.method,
                     statusCode: entry.statusCode,
