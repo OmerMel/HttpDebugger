@@ -60,7 +60,6 @@ function applyFilters() {
     const searchTerm = searchInput.value.toLowerCase();
     const methodFilterValue = methodFilter.value;
     const statusFilterValue = statusFilter.value;
-    const timeFilterValue = parseInt(timeFilter.value);
     const failedOnly = failedOnlyCheckbox.checked;
 
     filteredRequests = requests.filter(request => {
