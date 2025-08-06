@@ -209,7 +209,7 @@ function createRequestRow(request) {
                     ${request.requestBody ? `
                         <div class="detail-section">
                             <div class="section-title">Request Body</div>
-                            <div class="code-block"><pre>${formatJson(request.responseBody)}</pre></div>
+                            <div class="code-block"><pre>${formatJson(request.requestBody)}</pre></div>
                         </div>` : ''
                     }
                     <div class="detail-section">
