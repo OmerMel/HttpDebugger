@@ -1,4 +1,4 @@
-package com.example.httpdebugger
+package com.omermel.httpdebugger
 
 class HttpLogBuffer(private val maxSize: Int = 200) {
 

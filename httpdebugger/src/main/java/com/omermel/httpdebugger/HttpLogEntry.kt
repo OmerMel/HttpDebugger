@@ -1,4 +1,4 @@
-package com.example.httpdebugger
+package com.omermel.httpdebugger
 
 data class HttpLogEntry(
     val method: String,

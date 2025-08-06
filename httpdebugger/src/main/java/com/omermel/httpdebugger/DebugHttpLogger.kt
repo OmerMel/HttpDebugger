@@ -1,4 +1,4 @@
-package com.example.httpdebugger
+package com.omermel.httpdebugger
 
 object DebugHttpLogger {
 

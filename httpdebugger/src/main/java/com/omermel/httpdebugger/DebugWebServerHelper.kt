@@ -1,8 +1,7 @@
-package com.example.httpdebugger
+package com.omermel.httpdebugger
 
 import android.content.Context
-import android.content.Intent
-import android.widget.Toast
+import android.util.Log
 
 /**
  * Helper class for easy integration of DebugWebServer
@@ -14,22 +13,22 @@ object DebugWebServerHelper {
      * Shows a toast with the server URL
      */
     fun quickStart(context: Context, port: Int = 8080): DebugWebServer {
-        val server = DebugWebServer.create(context)
+        val server = DebugWebServer.Companion.create(context)
             .setPort(port)
             .enableLogging(true)
             .build()
 
         server.setServerListener(object : DebugWebServer.ServerListener {
             override fun onServerStarted(serverUrl: String) {
-                Toast.makeText(context, "Debug server: $serverUrl", Toast.LENGTH_LONG).show()
+                Log.d("DebugWebServer", "Server started at: $serverUrl")
             }
 
             override fun onServerStopped() {
-                Toast.makeText(context, "Debug server stopped", Toast.LENGTH_SHORT).show()
+                Log.d("DebugWebServer", "Server stopped")
             }
 
             override fun onServerError(error: String) {
-                Toast.makeText(context, "Server error: $error", Toast.LENGTH_LONG).show()
+                Log.e("DebugWebServer", "Server error: $error")
             }
 
             override fun onRequest(uri: String, clientIp: String) {
@@ -42,37 +41,23 @@ object DebugWebServerHelper {
     }
 
     /**
-     * Start server as a background service
-     */
-    fun startAsService(context: Context, port: Int = 8080) {
-        DebugWebServerService.start(context, port)
-    }
-
-    /**
-     * Stop server service
-     */
-    fun stopService(context: Context) {
-        DebugWebServerService.stop(context)
-    }
-
-    /**
      * Get currently running server instance
      */
     fun getCurrentServer(): DebugWebServer? {
-        return DebugWebServer.getInstance()
+        return DebugWebServer.Companion.getInstance()
     }
 
     /**
      * Check if server is running
      */
     fun isServerRunning(): Boolean {
-        return DebugWebServer.getInstance()?.isRunning() == true
+        return DebugWebServer.Companion.getInstance()?.isRunning() == true
     }
 
     /**
      * Get server URL if running
      */
     fun getServerUrl(): String {
-        return DebugWebServer.getInstance()?.getServerUrl() ?: ""
+        return DebugWebServer.Companion.getInstance()?.getServerUrl() ?: ""
     }
 }

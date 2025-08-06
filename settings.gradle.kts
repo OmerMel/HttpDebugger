@@ -21,3 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "HttpDebugger"
 include(":app")
+include(":httpdebugger")

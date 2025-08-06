@@ -1,6 +1,5 @@
-package com.example.httpdebugger
+package com.omermel.httpdebugger
 
-import android.util.Log
 import okhttp3.Interceptor
 import okhttp3.Response
 import okhttp3.RequestBody
@@ -16,11 +15,6 @@ class HttpDebugInterceptor : Interceptor {
 
         val requestBody = request.body
         val requestBodyString = requestBody?.let { bodyToString(it) } ?: ""
-
-        request.headers.forEach {
-            Log.d("HttpDebug", "🟡 REQUEST HEADER => ${it.first}: ${it.second}")
-        }
-        Log.d("HttpDebug", "🟡 header count: ${request.headers.size}")
 
         val response = try {
             chain.proceed(request)
@@ -40,7 +34,6 @@ class HttpDebugInterceptor : Interceptor {
         val responseBody = response.peekBody(Long.MAX_VALUE)
         val responseBodyString = responseBody.string()
 
-        Log.d("HttpDebugInterceptor", "➡ Logging request: ${request.method} ${request.url}")
         DebugHttpLogger.logRequestResponse(
             method = request.method,
             url = request.url.toString(),
@@ -51,7 +44,6 @@ class HttpDebugInterceptor : Interceptor {
             responseHeaders = response.headers.toString().replace("\r\n", "\n"),
             responseBody = responseBodyString
         )
-        Log.d("HttpDebugInterceptor", "✅ Logged to DebugHttpLogger (${response.code})")
 
         return response
     }

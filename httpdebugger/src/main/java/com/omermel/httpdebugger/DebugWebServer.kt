@@ -1,4 +1,4 @@
-package com.example.httpdebugger
+package com.omermel.httpdebugger
 
 import android.content.Context
 import android.util.Log
@@ -6,6 +6,7 @@ import fi.iki.elonen.NanoHTTPD
 import java.io.IOException
 import java.net.NetworkInterface
 import java.net.SocketException
+import kotlin.text.get
 
 class DebugWebServer private constructor(
     private val context: Context,
@@ -67,17 +68,10 @@ class DebugWebServer private constructor(
             val ipAddress = getLocalIpAddress()
             val serverUrl = "http://$ipAddress:$port"
 
-            if (enableLogging) {
-                Log.i(TAG, "Debug server started at: $serverUrl")
-            }
-
             serverListener?.onServerStarted(serverUrl)
             true
         } catch (e: IOException) {
             val errorMsg = "Failed to start server: ${e.message}"
-            if (enableLogging) {
-                Log.e(TAG, errorMsg, e)
-            }
             serverListener?.onServerError(errorMsg)
             false
         }
@@ -88,10 +82,6 @@ class DebugWebServer private constructor(
             stop()
             isRunning = false
             instance = null
-
-            if (enableLogging) {
-                Log.i(TAG, "Debug server stopped")
-            }
 
             serverListener?.onServerStopped()
         }
@@ -111,10 +101,6 @@ class DebugWebServer private constructor(
         val uri = session.uri
         val clientIp = session.remoteIpAddress
 
-        if (enableLogging) {
-            Log.d(TAG, "Request for $uri from $clientIp")
-        }
-
         serverListener?.onRequest(uri, clientIp)
 
         // REST API handlers
@@ -131,17 +117,9 @@ class DebugWebServer private constructor(
             val response = newFixedLengthResponse(Response.Status.OK, mimeType, content)
             addCorsHeaders(response)
 
-            if (enableLogging) {
-                Log.d(TAG, "Served $target successfully")
-            }
-
             response
 
         } catch (e: IOException) {
-            if (enableLogging) {
-                Log.w(TAG, "File not found: $uri")
-            }
-
             if (uri == "/index.html") {
                 val debugHtml = createDebugIndexHtml()
                 val response = newFixedLengthResponse(Response.Status.OK, "text/html", debugHtml)

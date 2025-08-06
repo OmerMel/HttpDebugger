@@ -113,7 +113,7 @@ function fetchAndDisplayLogs() {
                     requestHeaders: parsedRequestHeaders,
                     responseHeaders: parsedResponseHeaders,
                     requestBody: entry.requestBody || "",
-                    responseBody: entry.responseBody || ""
+                    responseBody: formatJson(entry.responseBody) || ""
                 };
             }).reverse();
 
@@ -134,6 +134,14 @@ function parseHeaders(headerString) {
         }
     });
     return headers;
+}
+
+function formatJson(text) {
+    try {
+        return JSON.stringify(JSON.parse(text), null, 2);
+    } catch (e) {
+        return text; // return original if not valid JSON
+    }
 }
 
 function updateRequestsList() {
@@ -211,12 +219,12 @@ function createRequestRow(request) {
                     ${request.requestBody ? `
                         <div class="detail-section">
                             <div class="section-title">Request Body</div>
-                            <div class="code-block">${request.requestBody}</div>
+                            <div class="code-block"><pre>${formatJson(request.responseBody)}</pre></div>
                         </div>` : ''
                     }
                     <div class="detail-section">
                         <div class="section-title">Response Body</div>
-                        <div class="code-block">${request.responseBody}</div>
+                        <div class="code-block"><pre>${formatJson(request.responseBody)}</pre></div>
                     </div>
                 </div>
             </div>
