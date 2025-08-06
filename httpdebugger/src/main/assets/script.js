@@ -10,8 +10,6 @@ const downloadLogsBtn = document.getElementById('downloadLogs');
 const searchInput = document.getElementById('searchInput');
 const methodFilter = document.getElementById('methodFilter');
 const statusFilter = document.getElementById('statusFilter');
-const timeFilter = document.getElementById('timeFilter');
-const failedOnlyCheckbox = document.getElementById('failedOnly');
 const emptyState = document.getElementById('emptyState');
 const requestsList = document.getElementById('requestsList');
 
@@ -28,8 +26,6 @@ function setupEventListeners() {
     searchInput.addEventListener('input', applyFilters);
     methodFilter.addEventListener('change', applyFilters);
     statusFilter.addEventListener('change', applyFilters);
-    timeFilter.addEventListener('change', applyFilters);
-    failedOnlyCheckbox.addEventListener('change', applyFilters);
 }
 
 function toggleTheme() {
@@ -60,7 +56,6 @@ function applyFilters() {
     const searchTerm = searchInput.value.toLowerCase();
     const methodFilterValue = methodFilter.value;
     const statusFilterValue = statusFilter.value;
-    const failedOnly = failedOnlyCheckbox.checked;
 
     filteredRequests = requests.filter(request => {
         if (searchTerm && !request.url.toLowerCase().includes(searchTerm) &&
@@ -78,10 +73,6 @@ function applyFilters() {
             if (statusClass.toString() !== statusFilterValue) {
                 return false;
             }
-        }
-
-        if (failedOnly && request.statusCode < 400) {
-            return false;
         }
 
         return true;
