@@ -3,7 +3,7 @@
 
 A lightweight Android debugging library for capturing and inspecting HTTP traffic from your app — complete with an in-app web UI, real-time log viewer, and filtering capabilities. Perfect for developers using Retrofit, OkHttp, or any HTTP client.
 
-![screenshot](https://your-image-url-if-applicable) <!-- Optional GIF or Screenshot -->
+![gif](https://github.com/OmerMel/HttpDebugger/blob/master/gif.gif)
 
 
 ---
