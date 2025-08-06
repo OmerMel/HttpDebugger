@@ -81,16 +81,6 @@ function applyFilters() {
             }
         }
 
-        if (timeFilterValue && request.timestamp) {
-            const now = Date.now();
-            const requestTime = new Date("1970-01-01T" + request.timestamp).getTime();
-            const cutoff = now - timeFilterValue * 60 * 1000;
-
-            if (Date.now() - request._rawTimestamp > timeFilterValue * 60 * 1000) {
-                return false;
-            }
-        }
-
         if (failedOnly && request.statusCode < 400) {
             return false;
         }
@@ -109,14 +99,12 @@ function fetchAndDisplayLogs() {
                 const parsedRequestHeaders = parseHeaders(entry.requestHeaders);
                 const parsedResponseHeaders = parseHeaders(entry.responseHeaders);
 
-                // 🟡 Fallback: if request headers are empty, show placeholder
                 if (Object.keys(parsedRequestHeaders).length === 0) {
                     parsedRequestHeaders["(No headers)"] = "";
                 }
 
                 return {
                     id: index,
-                    _rawTimestamp: entry.timestamp,
                     timestamp: new Date(entry.timestamp).toLocaleTimeString(),
                     method: entry.method,
                     statusCode: entry.statusCode,
@@ -152,7 +140,7 @@ function formatJson(text) {
     try {
         return JSON.stringify(JSON.parse(text), null, 2);
     } catch (e) {
-        return text; // return original if not valid JSON
+        return text;
     }
 }
 
