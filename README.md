@@ -25,7 +25,7 @@ Then add the library dependency:
 
 ```groovy
 dependencies {
-    implementation("com.github.OmerMel:HttpDebugger:V1.0.0")
+    implementation("com.github.OmerMel:HttpDebugger:v1.0.0")
 }
 ```
 
