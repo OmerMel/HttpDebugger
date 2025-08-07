@@ -1,5 +1,5 @@
 
-# SimpleHTTP Debugger
+# HTTP Debugger
 
 A lightweight Android debugging library for capturing and inspecting HTTP traffic from your app — complete with an in-app web UI, real-time log viewer, and filtering capabilities. Perfect for developers using Retrofit, OkHttp, or any HTTP client.
 
